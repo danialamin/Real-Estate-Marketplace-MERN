@@ -4,10 +4,11 @@ import SignIn from "./pages/SignIn"
 import SignUp from "./pages/SignUp"
 import About from "./pages/About"
 import Profile from "./pages/Profile"
+import Layout from "./layouts/Layout"
 
 function App() {
   const router = createBrowserRouter(createRoutesFromElements(
-    <Route>
+    <Route element={<Layout />}>
       <Route path="/" element={<p className="text-black text-[2rem]">Hello</p>} />
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/sign-up" element={<SignUp />} />
