@@ -1,6 +1,8 @@
-const Home = () => {
+import React from "react"
+
+const Home: React.FC = () => {
   return (
-    <div><p className="text-black text-[2rem]">Home</p></div>
+    <div>Home</div>
   )
 }
 
