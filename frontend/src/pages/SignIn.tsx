@@ -9,12 +9,13 @@ const signinAction = async ({request, params}) => {
   const email = formData.get("email")
   const password = formData.get("password")
 
-  const instance = axios.create({
-    baseURL: 'http://localhost:4000/api/auth/',
-    withCredentials: true
+  const resp = await fetch('http://localhost:4000/api/auth/signin', {
+    method: 'POST',
+    credentials: 'include',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({email: email, password: password})
   })
-  const resp = await instance.post('signin', {email: email, password: password})
-  const data = resp.data
+  const data = await resp.json()
   
   return data.message
 }
@@ -33,7 +34,7 @@ const SignIn: React.FC = () => {
     <div className="flex justify-center w-[100vw] grow bg-slate-100">
       <div className="w-[min(500px,100%)] mt-[40px]">
         <h1 className="text-center text-[2rem] mb-5 font-[500]">Sign In</h1>
-        {actionData == 'error' ? <h1 className="w-[min(450px,100%)] text-center text-[1rem] mb-2 text-red-600 font-[500] p-1">Wrong credentials</h1> : null}
+        {actionData == 'User not found!' ? <h1 className="w-[min(450px,100%)] text-center text-[1rem] mb-2 text-red-600 font-[500] p-1">Wrong credentials</h1> : null}
         <Form replace method="post">
           <input name="email" type="email" required placeholder="email" className="w-[min(450px,100%)] rounded p-2 outline-none border-slate-400 mb-3" />
           <input name="password" type="password" required placeholder="password" className="w-[min(450px,100%)] rounded p-2 outline-none border-slate-400 mb-[30px]" />

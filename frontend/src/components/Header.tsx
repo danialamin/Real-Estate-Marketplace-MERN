@@ -23,12 +23,12 @@ const Header: React.FC = () => {
       </form>
 
       <div className="sm:hidden cursor-pointer" onClick={() => setShowSide(prev => !prev)}><IoMdMenu size={25} /></div>
-      <div className="flex w-[max(150px,15%)] justify-between max-sm:hidden">
+      <div className="flex w-[max(150px,15%)] justify-between items-center max-sm:hidden">
         <NavLink to={'/'} className={({isActive}) => isActive ? 'border-b-2 border-blue-600':''}>Home</NavLink>
         <NavLink to={'/about'} className={({isActive}) => isActive ? 'border-b-2 border-blue-600':''}>About</NavLink>
           {/* show profile picture if logged in otherwise show Sign in button */}
         {currentUser ? (
-          <Link to={'/profile'}><img src={currentUser.photo} alt="profile" className="rounded-full h-7 w-7 object-cover cursor-pointer" /></Link>
+          <Link to={'/profile'}><img src={currentUser.photo} alt="profile" className="rounded-full h-[36px] w-[36px] object-cover cursor-pointer" /></Link>
         ) : (
         <NavLink to={'/sign-in'} className={({isActive}) => isActive ? 'border-b-2 border-blue-600':''}>Sign In</NavLink>)}
       </div>
@@ -37,7 +37,9 @@ const Header: React.FC = () => {
         <NavLink to={'/'} className={({isActive}) => isActive ? 'bg-rose-400 block rounded p-2 mt-6':'block p-2 mt-6 hover:bg-rose-200'}>Home</NavLink>
         <NavLink to={'/about'} className={({isActive}) => isActive ? 'bg-rose-400 block rounded p-2':'block p-2 hover:bg-rose-200'}>About</NavLink>
         {/* Dont show Sign In if user logged in */}
-        {!currentUser && <NavLink to={'/sign-in'} className={({isActive}) => isActive ? 'bg-rose-400 block rounded p-2':'block p-2 hover:bg-rose-200'}>Sign In</NavLink>}
+        {currentUser ? 
+        <NavLink to={'/profile'} className={({isActive}) => isActive ? 'bg-rose-400 block rounded p-2':'block p-2 hover:bg-rose-200'}>Profile</NavLink> : 
+        <NavLink to={'/sign-in'} className={({isActive}) => isActive ? 'bg-rose-400 block rounded p-2':'block p-2 hover:bg-rose-200'}>Sign In</NavLink>}
       </div>
     </header>
   )

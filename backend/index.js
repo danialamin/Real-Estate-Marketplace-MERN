@@ -6,13 +6,14 @@ const bcryptjs = require('bcryptjs')
 const userModel = require('./models/userModel')
 const verifyUser = require('./utils/verifyUser')
 const dotenv = require('dotenv').config()
-const cookies = require("cookie-parser");
+const cookieParser = require("cookie-parser");
+const listingModel = require('./models/listingModel')
 
 const app = express()
 
-app.use(cors({ origin: true, credentials: true }))
+app.use(cookieParser())
+app.use(cors({origin: true, credentials: true}))
 app.use(express.json()) //to parse req.body
-app.use(cookies())
 
 mongoose.connect(process.env.CONNECTION_STRING)
 .then(() => {
@@ -37,7 +38,7 @@ app.post("/api/user/signup", async (req, res) => {
 app.use("/api/auth", authRoute)
 
 
-app.post('/updateImg/:id', verifyUser, async (req, res) => {
+app.post('/updateUser/:id', verifyUser, async (req, res) => {
   if (req.user.id !== req.params.id) {return res.status(400).json({'message': 'user not logged in'})}
 
   try {
@@ -57,8 +58,33 @@ app.post('/updateImg/:id', verifyUser, async (req, res) => {
   } catch(err) {
     res.json({'message': 'user not logged in'})
   }
+})
 
-  const updatedUser = await userModel.updateOne({_id: req.params.id}, {$set: {
-    photo: req.body.photo
-  }})
+app.delete('/deleteUser/:id', verifyUser, async (req, res) => {
+  if (req.user.id !== req.params.id) {return res.status(404).json({'message': 'user not logged in'})}
+
+  const deletedUser = await userModel.deleteOne({_id: req.params.id})
+  res.status(200)
+     .cookie('jwt', '')
+     .json({'message': 'deletion successful'})
+})
+
+app.get('/signOut/:id', verifyUser, async (req, res) => {
+  if (req.user.id !== req.params.id) {return res.status(404).json({'message': 'user not logged in'})}
+
+  res.status(200)
+     .cookie('jwt', '')
+     .json({'message': 'sign out successful'})
+})
+
+app.post('/createListing/:id', verifyUser, async(req, res) => {
+  if (req.user.id !== req.params.id) {return res.status(404).json({'message': 'user not logged in'})}
+
+  const newListing = new listingModel({...req.body, userRef: req.params.id})
+  try{
+    await newListing.save()
+    res.status(200).json({'message': 'listing created in db'})
+  } catch(err) {
+    res.status(400).json({'message': 'Please fill all fields'}) // some things were missing in body
+  }
 })

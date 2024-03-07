@@ -1,15 +1,17 @@
 import React, { useEffect, useRef, useState } from "react"
-import { useSelector } from "react-redux"
-import { Form } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { Form, Link } from "react-router-dom"
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage"
 import {app} from "../firebase"
+import {action} from "../redux/userSlice"
 
 const Profile: React.FC = () => {  
   const currentUser = useSelector(state => state.user.currentUser)
   const fileRef = useRef(null)
   const [file, setFile] = useState(undefined)
-  const [fileUploadError, setFileUploadError] = useState(false);
+  const [error, setError] = useState(false);
   const [formData, setFormData] = useState({})
+  const dispatch = useDispatch()
 
   useEffect(() => {
     handleFileUpload(file)    
@@ -25,15 +27,63 @@ const Profile: React.FC = () => {
       uploadTask.on('state_changed',
         (snapshot) => {},
         (error) => {
-          setFileUploadError(true)
+          setError(true)
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then( 
             (downloadURL) => {
-            setFormData({photo: downloadURL})
+            setFormData(prev => { return {...prev, photo: downloadURL}})
           })
-        }
-      )
+        })}
+  }
+  const handleChange = (e) => {
+    setFormData(prev => {return {...prev, [e.target.name]: e.target.value}})
+  }
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const res = await fetch(`http://localhost:4000/updateUser/${currentUser._id}`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(formData)
+      })
+      const data = await res.json()
+      if (data.message === 'user not logged in') {
+        setError(true)
+      } else {
+        dispatch(action(data.message))
+        setError(false)
+      }
+    } catch(err) {
+      setError(true)
+    }
+  }
+  const handleDelete = async () => {
+    const res = await fetch(`http://localhost:4000/deleteUser/${currentUser._id}`, {
+      method: 'DELETE',
+      credentials: 'include'
+    })
+    const data = await res.json()
+    
+    if (data.message === 'user not logged in') {
+      setError(true)
+    } else {
+      dispatch(action(null)) // delete currentUser state
+      setError(false)
+    }
+  }
+  const handleSignOut = async () => {
+    const res = await fetch(`http://localhost:4000/signOut/${currentUser._id}`, {
+      method: 'GET',
+      credentials: 'include'
+    })
+    const data = await res.json()
+
+    if (data.message === 'user not logged in') {
+      setError(true)
+    } else {
+      dispatch(action(null))
     }
   }
   return (
@@ -44,16 +94,19 @@ const Profile: React.FC = () => {
         <div className="flex justify-center">
           <img src={formData.photo || currentUser.photo} alt="profile" onClick={()=> fileRef.current.click()} className="rounded-full w-[125px] h-[125px] cursor-pointer object-cover" />
         </div>
-        <Form method="post" replace>
-          <input type="text" placeholder="username" name="username" className="w-[100%] outline-none mb-[10px] py-1 px-3" />
-          <input type="email" placeholder="email" name="email" className="w-[100%] outline-none mb-[10px] py-1 px-3" />
-          <input type="text" placeholder="password" name="password" className="w-[100%] outline-none mb-[10px] py-1 px-3" />
-          <button className="w-[100%] px-[8px] py-[6px] bg-blue-800 rounded mb-[10px] text-white font-[500]">UPDATE</button>
-        </Form>
-        <button className="w-[100%] px-[8px] py-[6px] bg-green-800 rounded text-white font-[500] mb-[15px]">CREATE LISTING</button>
+
+        {error ? <p className="mt-[20px] text-red-600 text-[0.9rem] font-[600] cursor-pointer flex justify-center">Error!</p> : null}
+
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <input type="text" placeholder="username" name="username" onChange={e=>handleChange(e)} defaultValue={currentUser.username} className="w-[100%] outline-none mb-[10px] py-1 px-3" />
+          <input type="email" placeholder="email" name="email" onChange={e=>handleChange(e)} defaultValue={currentUser.email} className="w-[100%] outline-none mb-[10px] py-1 px-3" />
+          <input type="text" placeholder="password" name="password" onChange={e=>handleChange(e)} className="w-[100%] outline-none mb-[10px] py-1 px-3" />
+          <button className="w-[100%] px-[8px] py-[6px] bg-blue-800 rounded mb-[10px] text-white font-[500] outline-none">UPDATE</button>
+        </form>
+        <Link to={'/create-listing'}><button className="w-[100%] px-[8px] py-[6px] bg-green-800 rounded text-white font-[500] mb-[15px] outline-none">CREATE LISTING</button></Link>
         <div className="flex justify-between">
-          <p className="text-red-600 text-[0.9rem] font-[600] cursor-pointer">Delete Account</p>
-          <p className="text-red-600 text-[0.9rem] font-[600] cursor-pointer">Sign out</p>
+          <p onClick={handleDelete} className="text-red-600 text-[0.9rem] font-[600] cursor-pointer">Delete Account</p>
+          <p onClick={handleSignOut} className="text-red-600 text-[0.9rem] font-[600] cursor-pointer">Sign out</p>
         </div>
         <p className="mt-[20px] text-green-600 text-[0.9rem] font-[600] cursor-pointer flex justify-center">Show listings</p>
       </div>
