@@ -22,7 +22,7 @@ const CreateListing = () => {
         setFormData((prev) => {return {...prev, imageUrls: prev.imageUrls.concat(urls) }})
         setImageUploadError(false)
         setUploading(false)
-      }).catch((err) => {
+      }).catch((error) => {
         setImageUploadError('Image upload failed (2 mb max per image)')
         setUploading(false)
       })
