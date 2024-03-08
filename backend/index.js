@@ -77,14 +77,14 @@ app.get('/signOut/:id', verifyUser, async (req, res) => {
      .json({'message': 'sign out successful'})
 })
 
-app.post('/createListing/:id', verifyUser, async(req, res) => {
+app.post('/listing/createListing/:id', verifyUser, async(req, res) => {
   if (req.user.id !== req.params.id) {return res.status(404).json({'message': 'user not logged in'})}
 
   const newListing = new listingModel({...req.body, userRef: req.params.id})
   try{
     await newListing.save()
-    res.status(200).json({'message': 'listing created in db'})
+    res.status(200).json({'message': newListing})
   } catch(err) {
-    res.status(400).json({'message': 'Please fill all fields'}) // some things were missing in body
+    res.status(400).json({'message': 'user not logged in'}) // some things were missing in body
   }
 })
