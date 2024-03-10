@@ -11,6 +11,7 @@ const Profile: React.FC = () => {
   const [file, setFile] = useState(undefined)
   const [error, setError] = useState(false);
   const [formData, setFormData] = useState({})
+  const [myListings, setMyListings] = useState([])
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -86,6 +87,28 @@ const Profile: React.FC = () => {
       dispatch(action(null))
     }
   }
+  const handleShowListings = async () => {
+    const res = await fetch(`http://localhost:4000/listing/myListing/${currentUser._id}`, {
+      method: 'GET',
+      credentials: 'include'
+    })
+    const data = await res.json()
+    setMyListings(data.message)
+  }
+  const handleDeleteListing = async (listingId) => {
+    const res = await fetch(`http://localhost:4000/listing/deleteMyListing/${currentUser._id}`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      credentials: "include",
+      body: JSON.stringify({listingId: listingId})
+    })
+    const data = await res.json()
+    if (data.message == 'listing deleted') {
+      setMyListings(prev => prev.filter((listing) => listing._id !== listingId))
+    } else {
+      console.log('ERR!')
+    }
+  }
   return (
     <div className="grow flex justify-center items-center">
       <div className="w-[min(100%,500px)]">
@@ -108,7 +131,21 @@ const Profile: React.FC = () => {
           <p onClick={handleDelete} className="text-red-600 text-[0.9rem] font-[600] cursor-pointer">Delete Account</p>
           <p onClick={handleSignOut} className="text-red-600 text-[0.9rem] font-[600] cursor-pointer">Sign out</p>
         </div>
-        <p className="mt-[20px] text-green-600 text-[0.9rem] font-[600] cursor-pointer flex justify-center">Show listings</p>
+        <p onClick={handleShowListings} className="mt-[20px] text-green-600 text-[0.9rem] font-[600] cursor-pointer flex justify-center">Show listings</p>
+          {myListings.length > 0 && myListings.map((listing, url) => 
+            <div key={url} className="border rounded-lg p-3 flex justify-between items-center gap-4">
+              <Link to={`/listing/${listing._id}`}>
+                <img src={listing.imageUrls[0]} alt="image" className="w-16 h-16 object-contain cursor-pointer"/>
+              </Link>
+              <Link to={`/listing/${listing._id}`} className="text-slate-700 font-semibold flex-1 cursor-pointer hover:underline truncate">
+                <p>{listing.name}</p>
+              </Link>
+              <div className="flex flex-col items-center">
+                <button onClick={()=>handleDeleteListing(listing._id)} className="text-red-700 text-[0.95rem] font-[500]">DELETE</button>
+                <Link to={`/update-listing/${listing._id}`}><button className="text-green-700 text-[0.95rem] font-[500]">EDIT</button></Link>
+              </div>
+            </div>
+          )}
       </div>
     </div>
   )

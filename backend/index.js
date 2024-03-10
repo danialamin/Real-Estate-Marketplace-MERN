@@ -88,3 +88,80 @@ app.post('/listing/createListing/:id', verifyUser, async(req, res) => {
     res.status(400).json({'message': 'user not logged in'}) // some things were missing in body
   }
 })
+
+app.get('/listing/myListing/:id', verifyUser, async (req, res) => {
+  if (req.user.id !== req.params.id) {return res.status(404).json({'message': 'user not logged in'})}
+
+  const listings = await listingModel.find({userRef: req.params.id})
+  res.status(200).json({'message': listings})
+})
+
+app.post('/listing/deleteMyListing/:id', verifyUser, async (req, res) => {
+  if (req.user.id !== req.params.id) {return res.status(404).json({'message': 'user not logged in'})}
+
+  const listing = await listingModel.findOne({_id: req.body.listingId})
+  if (listing.userRef == req.params.id) {
+    const deletedListing = await listingModel.deleteOne({_id: req.body.listingId})
+    res.status(200).json({'message': 'listing deleted'})
+  } else {
+    res.status(404).json({'message': 'you can only delete your own listing'})
+  }
+})
+
+app.post('/listing/updateMyListing/:id', verifyUser, async (req, res) => {
+  if (req.user.id !== req.params.id) {return res.status(404).json({'message': 'user not logged in'})}
+
+  const listing = await listingModel.findOne({_id: req.body.listingId})
+
+  // check if listing's creator and the user who wants to edit the listing are same
+  if (req.params.id !== listing.userRef) {res.status(404).json({'message': 'you can only edit your own listing'})}
+
+  const updatedListing = await listingModel.findByIdAndUpdate({_id: req.body.listingId}, req.body.newObject, {new: true})
+  res.status(200).json({'message': updatedListing})
+})
+
+app.get('/getListing/:id', async (req, res) => {
+  const listing = await listingModel.findOne({_id: req.params.id})
+  res.status(200).json({'message': listing})
+})
+
+app.get('/get', async (req, res) => {
+  const limit = parseInt(req.query.limit) || 9
+  const startIndex = parseInt(req.query.startIndex) || 0
+  
+  let offer
+  if (req.query.offer === undefined || req.query.offer === 'false') {
+    offer = { $in: [true, false] }
+  }
+
+  let furnished
+  if (req.query.furnished === undefined || req.query.furnished === 'false') {
+    furnished = { $in: [true, false] }
+  }
+
+  let parking
+  if (req.query.parking === undefined || req.query.parking === 'false') {
+    parking = { $in: [true, false] }
+  }
+
+  let type
+  if (req.query.type === undefined || req.query.type === 'all') {
+    type = { $in: ['sale', 'rent'] }
+  }
+
+  const searchTerm = req.query.searchTerm || ''
+  const sort = req.query.sort || 'createdAt'
+  const order = req.query.order || 'desc'
+
+  const listings = await listingModel.find({
+    name: {$regex: searchTerm, $option: 'i'}, // regex means include those listings that are not an exact match; 'i' means ignore the case of letters i.e. capital/small
+    offer: offer,
+    furnished: furnished,
+    parking: parking,
+    type: type
+  }).sort({ [sort]: order})
+    .limit(limit)
+    .skip(startIndex)
+  
+  return res.status(200).json({'message': listings})
+})
