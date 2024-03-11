@@ -1,4 +1,4 @@
-const InputsAndLabels = (props) => {
+const InputsAndLabels: React.FC = (props) => {
   return (
     <div className="flex flex-wrap gap-[6px]">
       <div className="flex gap-[3px] items-center">

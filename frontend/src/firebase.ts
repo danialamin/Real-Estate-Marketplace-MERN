@@ -4,7 +4,14 @@ import { initializeApp } from "firebase/app";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-const firebaseConfig = {
+const firebaseConfig: {
+  apiKey: string;
+  authDomain: string;
+  projectId: string;
+  storageBucket: string;
+  messagingSenderId: string;
+  appId: string;
+} = {
   apiKey: "AIzaSyBbIS5mBsv8wkpOKMSPATU4sMGBEn3t8zY",
   authDomain: "marketplace-705c6.firebaseapp.com",
   projectId: "marketplace-705c6",

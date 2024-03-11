@@ -3,7 +3,7 @@ import { IoMdMenu } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
 import { FaSearch } from "react-icons/fa";
 import { Link, NavLink, useNavigate, useSearchParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { UseSelector, useSelector } from "react-redux";
 
 const Header = () => {
   const currentUser = useSelector(state => state.user.currentUser)
