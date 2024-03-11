@@ -24,7 +24,7 @@ const Action = async ({request, params}) => {
   }
 }
 
-const SignUp: React.FC = () => {
+const SignUp = () => {
   const actionData = useActionData()
   const navigation = useNavigation()
   const navigationStateIsIdle = navigation.state == 'idle' ? true : false

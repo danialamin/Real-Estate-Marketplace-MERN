@@ -1,20 +1,20 @@
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements} from "react-router-dom"
-import Home from "./pages/Home"
-import {SignIn} from "./pages/SignIn"
-import { signinAction } from "./pages/SignIn"
-import SignUp from "./pages/SignUp"
-import {Action} from "./pages/SignUp"
-import About from "./pages/About"
-import Profile from "./pages/Profile"
-import Layout from "./layouts/Layout"
-import PrivateRoute from "./components/PrivateRoute"
-import CreateListing from "./pages/CreateListing"
-import UpdateListing from "./pages/UpdateListing"
-import Listing from "./pages/Listing"
-import {Loader} from "./pages/Listing"
-import Search, { searchLoader } from "./pages/Search"
+import Home from "./pages/Home.jsx"
+import {SignIn} from "./pages/SignIn.jsx"
+import { signinAction } from "./pages/SignIn.jsx"
+import SignUp from "./pages/SignUp.jsx"
+import {Action} from "./pages/SignUp.jsx"
+import About from "./pages/About.jsx"
+import Profile from "./pages/Profile.jsx"
+import Layout from "./layouts/Layout.jsx"
+import PrivateRoute from "./components/PrivateRoute.jsx"
+import CreateListing from "./pages/CreateListing.jsx"
+import UpdateListing from "./pages/UpdateListing.jsx"
+import Listing from "./pages/Listing.jsx"
+import {Loader} from "./pages/Listing.jsx"
+import Search, { searchLoader } from "./pages/Search.jsx"
 
-function App() {
+const App = () => {
   const router = createBrowserRouter(createRoutesFromElements(
     <Route element={<Layout />}>
       <Route path="/" element={<Home />} />
@@ -36,4 +36,4 @@ function App() {
   )
 }
 
-export default App
+export {App}

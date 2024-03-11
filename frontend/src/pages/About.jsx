@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function About() {
+const About = () => {
   return (
     <div className='py-20 px-4 max-w-6xl mx-auto'>
       <h1 className='text-3xl font-bold mb-4 text-slate-800'>About Easy Estate</h1>
@@ -12,3 +12,4 @@ export default function About() {
     </div>
   )
 }
+export default About

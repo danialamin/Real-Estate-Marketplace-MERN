@@ -1,11 +1,9 @@
-import React from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { Form, Link, Navigate, useActionData, useNavigation } from "react-router-dom"
 import { action } from "../redux/userSlice"
-import axios from "axios"
 
-const signinAction = async ({request, params}) => {
-  const formData = await request.formData()
+const signinAction = async (obj) => {
+  const formData = await obj.request.formData()
   const email = formData.get("email")
   const password = formData.get("password")
 
@@ -20,7 +18,7 @@ const signinAction = async ({request, params}) => {
   return data.message
 }
 
-const SignIn: React.FC = () => {
+const SignIn = () => {
   const navigation = useNavigation()
   const navigationStateIsIdle = navigation.state == 'idle' ? true : false
   const actionData = useActionData()

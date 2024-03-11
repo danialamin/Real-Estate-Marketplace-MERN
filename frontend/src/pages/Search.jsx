@@ -19,7 +19,7 @@ const Search = () => {
         <h1 className="mx-auto text-[2rem]">Listing Results</h1>
         <div className="w-[100%] mt-[20px] px-2 flex flex-wrap gap-2">
           {arr.length > 0 ? arr.map(obj =>
-            <Link to={`/listing/${obj._id}`} className="w-[min(300px,100%)]">
+            <Link to={`/listing/${obj._id}`} key={obj._id} className="w-[min(300px,100%)]">
               <div className="flex flex-col bg-slate-200 py-1 px-2 rounded-lg cursor-pointer">
                 <img src={obj.imageUrls} alt="image" height={200} />
                 <p className="truncate mb-[7px] text-[1.2rem]">{obj.name}</p>
