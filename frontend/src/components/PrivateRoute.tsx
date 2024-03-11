@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux'
 import { Navigate, Outlet } from 'react-router-dom'
 
-const PrivateRoute = () => {
+const PrivateRoute: React.FC = () => {
   const currentUser = useSelector(state => state.user.currentUser)
 
   if (currentUser) {

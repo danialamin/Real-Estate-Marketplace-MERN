@@ -6,7 +6,7 @@ import { app } from "../firebase"
 import { useSelector } from "react-redux"
 import { useNavigate, useNavigation } from "react-router-dom"
 
-const CreateListing = () => {
+const CreateListing: React.FC = () => {
   const [files, setFiles] = useState([])
   const [formData, setFormData] = useState({
     imageUrls: [],

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Home = () => {
+const Home: React.FC = () => {
   return (
     <div className='grow flex justify-center items-center'>
       <div className='w-[min(900px,100%)] p-10 flex justify-between max-sm:flex-col'>
