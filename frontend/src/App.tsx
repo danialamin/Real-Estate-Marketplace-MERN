@@ -4,17 +4,17 @@ import {SignIn} from "./pages/SignIn"
 import { signinAction } from "./pages/SignIn"
 import SignUp from "./pages/SignUp"
 import {Action} from "./pages/SignUp"
-import About from "./pages/About"
-import Profile from "./pages/Profile"
-import Layout from "./layouts/Layout"
-import PrivateRoute from "./components/PrivateRoute"
-import CreateListing from "./pages/CreateListing"
-import UpdateListing from "./pages/UpdateListing"
-import Listing from "./pages/Listing"
-import {Loader} from "./pages/Listing"
-import Search, { searchLoader } from "./pages/Search"
+import About from "./pages/About.tsx"
+import Profile from "./pages/Profile.tsx"
+import Layout from "./layouts/Layout.tsx"
+import PrivateRoute from "./components/PrivateRoute.tsx"
+import CreateListing from "./pages/CreateListing.tsx"
+import UpdateListing from "./pages/UpdateListing.tsx"
+import Listing from "./pages/Listing.tsx"
+import {Loader} from "./pages/Listing.tsx"
+import Search, { searchLoader } from "./pages/Search.tsx"
 
-const App = (): React.FC => {
+const App: React.FC = () => {
   const router = createBrowserRouter(createRoutesFromElements(
     <Route element={<Layout />}>
       <Route path="/" element={<Home />} />

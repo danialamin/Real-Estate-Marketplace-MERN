@@ -17,7 +17,7 @@ export const Loader = async ({request, params}) => {
   return defer({res: data})
 }
 
-const Listing = () => {
+const Listing: React.FC = () => {
   const loaderData = useLoaderData()
   return (
     <Suspense fallback={<h1 className="fixed top-[50%] left-[50%] text-[2rem] font-[500]">Loading...</h1>} >

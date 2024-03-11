@@ -1,12 +1,12 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import CheckboxesAndLabels from "../components/CheckboxesAndLabels"
 import InputsAndLabels from "../components/InputsAndLabels"
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage"
 import { app } from "../firebase"
 import { useSelector } from "react-redux"
-import { useNavigate, useNavigation } from "react-router-dom"
+import { useNavigate, useNavigation, useParams } from "react-router-dom"
 
-const CreateListing = () => {
+const UpdateListing: React.FC = () => {
   const [files, setFiles] = useState([])
   const [formData, setFormData] = useState({
     imageUrls: [],
@@ -27,6 +27,17 @@ const CreateListing = () => {
   const [error, setError] = useState(false)
   const navigate = useNavigate()
   const navigation = useNavigation()
+  const params = useParams()
+  
+  useEffect(() => {
+    const fetchListing = async () => {
+      const listingId = params.listingId
+      const res = await fetch(`http://localhost:4000/getListing/${listingId}`)
+      const data = await res.json()
+      setFormData(data.message)
+    }
+    fetchListing()
+  }, [])
   const handleImageSubmit = () => {
     if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
       setUploading(true)
@@ -86,23 +97,26 @@ const CreateListing = () => {
     e.preventDefault()
     if (formData.imageUrls.length == 0) {return setError('Please upload image(s)')}
     else {setError(false)}
-    const res = await fetch(`http://localhost:4000/listing/createListing/${currentUser._id}`, {
+    const res = await fetch(`http://localhost:4000/listing/updateMyListing/${currentUser._id}`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       credentials: 'include',
-      body: JSON.stringify(formData)
+      body: JSON.stringify({newObject: formData, listingId: params.listingId})
     })
     const data = await res.json()
-    if (data == "user not logged in") {
+    if (data.message == "user not logged in") {
       setError("Error, try again")
-    } else {
+    } else if (data.message == "you can only edit your own listing") {
+      setError("you can only edit your own listing")
+    }
+    else {
       navigate(`/listing/${data.message._id}`)
     }
   }
   return (
     <div className="grow flex justify-center items-center">
       <div className="w-[min(100%,800px)] h-[calc(100vh-78px)] flex flex-col items-center">
-        <h1 className="mt-[20px] text-[1.5rem] font-[800]">Create a Listing</h1>
+        <h1 className="mt-[20px] text-[1.5rem] font-[800]">Update a Listing</h1>
 
         <form onSubmit={(e)=>handleSubmit(e)} className="flex flex-col items-center w-[100%] md:flex-row md:items-start md:justify-around max-md:gap-[30px] mt-[20px]">
           <div className="flex flex-col gap-[10px] w-[min(100%,370px)]">
@@ -116,7 +130,7 @@ const CreateListing = () => {
           <div className="flex flex-col gap-[5px] w-[min(100%,370px)]">
             <p className="text-[0.9rem]"><b>Images:</b> The first image will be the cover (max 6)</p>
             <div className="flex">
-              <input type="file" onChange={e => setFiles(e.target.files)} accept="image/*" multiple required className="px-[10px] py-4 border-[0.5px] border-slate-300 mr-[10px] rounded"/>
+              <input type="file" onChange={e => setFiles(e.target.files)} accept="image/*" multiple className="px-[10px] py-4 border-[0.5px] border-slate-300 mr-[10px] rounded"/>
               <button type='button' onClick={handleImageSubmit} disabled={uploading} className="border-[1px] border-green-500 px-[10px] py-4 rounded">{uploading ? 'Uploading': 'Upload'}</button>
             </div>
             <p className="text-red-600 text-sm">{imageUploadError && imageUploadError}</p>
@@ -127,7 +141,7 @@ const CreateListing = () => {
                 <button type='button' onClick={()=>{handleRemoveImage(index)}} className="p-3 text-red-700 rounded-lg hover:opacity-75 outline-none">DELETE</button>
               </div>
             )}
-            <button disabled={navigation.state=="loading"||navigation.state=="submitting"} className="mt-[20px] bg-cyan-900 text-white py-2 mb-1 rounded font-[600] disabled:bg-slate-700">CREATE LISTING</button> {/*button's type will be submit by default*/}
+            <button disabled={navigation.state=="loading"||navigation.state=="submitting"} className="mt-[20px] bg-cyan-900 text-white py-2 mb-1 rounded font-[600] disabled:bg-slate-700">UPDATE LISTING</button> {/*button's type will be submit by default*/}
           </div>
         </form>
       </div>
@@ -135,4 +149,4 @@ const CreateListing = () => {
   )
 }
 
-export default CreateListing
+export default UpdateListing
