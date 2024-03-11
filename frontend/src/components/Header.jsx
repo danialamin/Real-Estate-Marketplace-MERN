@@ -1,14 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoMdMenu } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
 import { FaSearch } from "react-icons/fa";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate, useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const Header: React.FC = () => {
+const Header = () => {
   const currentUser = useSelector(state => state.user.currentUser)
   // showSide state determines if sidebar is visible
-  const [showSide, setShowSide] = useState<boolean>(false)
+  const [showSide, setShowSide] = useState(false)
+  const [inputVal, setInputVal] = useState()
+  const navigate = useNavigate()
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const urlParams = new URLSearchParams(window.location.search)
+    urlParams.set('searchTerm', inputVal)
+    const searchQuery = urlParams.toString()
+    navigate(`/search?${searchQuery}`)
+  }
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search)
+    const searchTermFromURL = urlParams.get('searchTerm')
+    if (searchTermFromURL) {
+      setInputVal(searchTermFromURL)
+    }
+  }, [location.search])
 
   return (
     <header className="bg-slate-300 h-[70px] flex justify-around items-center max-sm:justify-between shadow-md">
@@ -17,8 +34,8 @@ const Header: React.FC = () => {
           <span>Estates</span>
         </h1>
 
-      <form className="w-[max(200px,30%)] h-[45px] flex justify-center items-center rounded bg-white max-sm:h-[30px] max-sm:text-[0.9rem]">
-        <input type="text" className="w-[90%] h-full outline-none px-2 rounded " placeholder="Search...." />
+      <form onSubmit={e => handleSubmit(e)} className="w-[max(200px,30%)] h-[45px] flex justify-center items-center rounded bg-white max-sm:h-[30px] max-sm:text-[0.9rem]">
+        <input type="text" value={inputVal} onChange={(e)=>setInputVal(e.target.value)} className="w-[90%] h-full outline-none px-2 rounded " placeholder="Search...." />
         <button className="px-[2px] h-full bg-white rounded"><FaSearch /></button>
       </form>
 

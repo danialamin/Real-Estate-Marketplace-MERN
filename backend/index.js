@@ -126,42 +126,10 @@ app.get('/getListing/:id', async (req, res) => {
 })
 
 app.get('/get', async (req, res) => {
-  const limit = parseInt(req.query.limit) || 9
-  const startIndex = parseInt(req.query.startIndex) || 0
-  
-  let offer
-  if (req.query.offer === undefined || req.query.offer === 'false') {
-    offer = { $in: [true, false] }
-  }
-
-  let furnished
-  if (req.query.furnished === undefined || req.query.furnished === 'false') {
-    furnished = { $in: [true, false] }
-  }
-
-  let parking
-  if (req.query.parking === undefined || req.query.parking === 'false') {
-    parking = { $in: [true, false] }
-  }
-
-  let type
-  if (req.query.type === undefined || req.query.type === 'all') {
-    type = { $in: ['sale', 'rent'] }
-  }
-
   const searchTerm = req.query.searchTerm || ''
-  const sort = req.query.sort || 'createdAt'
-  const order = req.query.order || 'desc'
 
   const listings = await listingModel.find({
-    name: {$regex: searchTerm, $option: 'i'}, // regex means include those listings that are not an exact match; 'i' means ignore the case of letters i.e. capital/small
-    offer: offer,
-    furnished: furnished,
-    parking: parking,
-    type: type
-  }).sort({ [sort]: order})
-    .limit(limit)
-    .skip(startIndex)
-  
+    name: {$regex: searchTerm, $options: 'i'}, // regex means include those listings that are not an exact match; 'i' means ignore the case of letters i.e. capital/small
+  })  
   return res.status(200).json({'message': listings})
 })

@@ -12,6 +12,7 @@ import CreateListing from "./pages/CreateListing"
 import UpdateListing from "./pages/UpdateListing"
 import Listing from "./pages/Listing"
 import {Loader} from "./pages/Listing"
+import Search, { searchLoader } from "./pages/Search"
 
 function App() {
   const router = createBrowserRouter(createRoutesFromElements(
@@ -21,6 +22,7 @@ function App() {
       <Route path="/sign-up" element={<SignUp />} action={Action} />
       <Route path="/about" element={<About />} />
       <Route path="/listing/:id" element={<Listing />} loader={Loader} />
+      <Route path="/search" element={<Search />} loader={searchLoader} />
       <Route element={<PrivateRoute />}>
         <Route path="/profile" element={<Profile />} />
         <Route path="/create-listing" element={<CreateListing />} /> 
