@@ -3,11 +3,11 @@ import CheckboxesAndLabels from "../components/CheckboxesAndLabels"
 import InputsAndLabels from "../components/InputsAndLabels"
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage"
 import { app } from "../firebase"
-import { useSelector } from "react-redux"
-import { useNavigate, useNavigation } from "react-router-dom"
+import { UseSelector, useSelector } from "react-redux"
+import { NavigateFunction, Navigation, useNavigate, useNavigation } from "react-router-dom"
 
 const CreateListing: React.FC = () => {
-  const [files, setFiles] = useState([])
+  const [files, setFiles] = useState<[]>([])
   const [formData, setFormData] = useState({
     imageUrls: [],
     name: "",
@@ -21,13 +21,13 @@ const CreateListing: React.FC = () => {
     parking: false,
     type: 'sell',
     offer: false})
-  const [imageUploadError, setImageUploadError] = useState(false)
-  const [uploading, setUploading] = useState(false)
-  const currentUser = useSelector(state=>state.user.currentUser)
-  const [error, setError] = useState(false)
-  const navigate = useNavigate()
-  const navigation = useNavigation()
-  const handleImageSubmit = () => {
+  const [imageUploadError, setImageUploadError] = useState<boolean>(false)
+  const [uploading, setUploading] = useState<boolean>(false)
+  const currentUser: UseSelector = useSelector(state=>state.user.currentUser)
+  const [error, setError] = useState<boolean>(false)
+  const navigate: NavigateFunction = useNavigate()
+  const navigation: Navigation = useNavigation()
+  const handleImageSubmit: () => void = () => {
     if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
       setUploading(true)
       setImageUploadError(false)

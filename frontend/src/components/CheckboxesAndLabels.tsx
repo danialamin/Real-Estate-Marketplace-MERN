@@ -1,4 +1,4 @@
-const CheckboxesAndLabels = (props) => {
+const CheckboxesAndLabels: React.FC = (props) => {
   return (
     <div className="flex flex-wrap gap-[6px]">
       <div className="flex gap-[3px]">

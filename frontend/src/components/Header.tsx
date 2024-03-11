@@ -3,10 +3,10 @@ import { IoMdMenu } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
 import { FaSearch } from "react-icons/fa";
 import { Link, NavLink, useNavigate, useSearchParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { UseSelector, useSelector } from "react-redux";
 
 const Header: React.FC = () => {
-  const currentUser = useSelector(state => state.user.currentUser)
+  const currentUser: UseSelector = useSelector(state => state.user.currentUser)
   // showSide state determines if sidebar is visible
   const [showSide, setShowSide] = useState(false)
   const [inputVal, setInputVal] = useState()
