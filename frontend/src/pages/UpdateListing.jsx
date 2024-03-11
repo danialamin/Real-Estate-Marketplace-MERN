@@ -123,7 +123,28 @@ const UpdateListing = () => {
             <input type="text" placeholder="Name" name='name' value={formData.name} onChange={(e)=>handleTextChange(e)} required className="outline-none px-2 py-1 border-[0.5px] border-slate-300 rounded" />
             <textarea rows={3} placeholder="Description" name='description' value={formData.description} onChange={(e)=>handleTextChange(e)} required className="outline-none px-2 py-1 border-[0.5px] border-slate-300 rounded"></textarea>
             <input type="text" placeholder="Address" name='address' value={formData.address} onChange={(e)=>handleTextChange(e)} required className="outline-none px-2 py-1 border-[0.5px] border-slate-300 rounded" />
-            <CheckboxesAndLabels handleCheckboxChange={handleCheckboxChange} handleRadioboxChange={handleRadioboxChange} formData={formData} />
+            <div className="flex flex-wrap gap-[6px]">
+              <div className="flex gap-[3px]">
+                <input type="radio" name="type" checked={formData.type=='sell'} onChange={(e)=>handleRadioboxChange(e)} id="sell" className="w-[16px]" />
+                <label htmlFor="sell" className="text-[0.95rem]">Sell</label>
+              </div>
+              <div className="flex gap-[3px]">
+                <input type="radio" name="type" checked={formData.type=='rent'} onChange={(e)=>handleRadioboxChange(e)} id="rent" className="w-[16px]" />
+                <label htmlFor="rent" className="text-[0.95rem]">Rent</label>
+              </div>
+              <div className="flex gap-[3px]">
+                <input type="checkbox" name="parking" value={formData.parking} onChange={(e) => handleCheckboxChange(e)} id="parkingSpot" className="w-[16px]" />
+                <label htmlFor="parkingSpot" className="text-[0.95rem]">Parking Spot</label>
+              </div>
+              <div className="flex gap-[3px]">
+                <input type="checkbox" name="furnished" value={formData.furnished} onChange={(e) => handleCheckboxChange(e)} id="furnished" className="w-[16px]" />
+                <label htmlFor="furnished" className="text-[0.95rem]">Furnished</label>
+              </div>
+              <div className="flex gap-[3px]">
+                <input type="checkbox" name="offer" value={formData.offer} onChange={(e) => handleCheckboxChange(e)} id="offer" className="w-[16px]" />
+                <label htmlFor="offer" className="text-[0.95rem]">Offer</label>
+              </div>
+            </div>
             <InputsAndLabels handleNumberChange={handleNumberChange} formData={formData} />
           </div>
 
