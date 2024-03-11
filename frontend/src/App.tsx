@@ -14,7 +14,7 @@ import Listing from "./pages/Listing"
 import {Loader} from "./pages/Listing"
 import Search, { searchLoader } from "./pages/Search"
 
-function App() {
+const App = (): React.FC => {
   const router = createBrowserRouter(createRoutesFromElements(
     <Route element={<Layout />}>
       <Route path="/" element={<Home />} />
@@ -36,4 +36,4 @@ function App() {
   )
 }
 
-export default App
+export {App}
