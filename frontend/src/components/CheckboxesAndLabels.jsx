@@ -1,4 +1,5 @@
 const CheckboxesAndLabels = (props) => {
+  console.log(props)
   return (
     <div className="flex flex-wrap gap-[6px]">
       <div className="flex gap-[3px]">
