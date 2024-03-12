@@ -15,7 +15,13 @@ const app = express()
 module.exports = app
 
 app.use(cookieParser())
-app.use(cors({origin: true, credentials: true}))
+const corsConfig = {
+  origin: '',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
+}
+app.use(cors(corsConfig))
+app.options("", cors(corsConfig))
 app.use(express.json()) //to parse req.body
 
 mongoose.connect(process.env.CONNECTION_STRING)
