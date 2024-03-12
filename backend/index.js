@@ -10,6 +10,7 @@ const cookieParser = require("cookie-parser");
 const listingModel = require('./models/listingModel')
 
 const app = express()
+module.exports = app
 
 app.use(cookieParser())
 app.use(cors({origin: true, credentials: true}))
