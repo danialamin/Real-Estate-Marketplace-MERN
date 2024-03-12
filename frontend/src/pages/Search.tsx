@@ -9,7 +9,7 @@ export const searchLoader = async ({request, params}) => {
   return defer({data: data})
 }
 
-const Search: React.FC = () => {
+const Search = () => {
   const loaderData = useLoaderData()
   return (
     <Await resolve={loaderData.data}>{(data) => {

@@ -5,7 +5,7 @@ import { FaSearch } from "react-icons/fa";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const Header: React.FC = () => {
+const Header = () => {
   const currentUser = useSelector(state => state.user.currentUser)
   // showSide state determines if sidebar is visible
   const [showSide, setShowSide] = useState(false)

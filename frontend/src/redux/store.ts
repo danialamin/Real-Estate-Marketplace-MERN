@@ -1,13 +1,7 @@
-import { EnhancedStore, StoreEnhancer, ThunkDispatch, Tuple, UnknownAction, configureStore } from "@reduxjs/toolkit"
+import { configureStore } from "@reduxjs/toolkit"
 import { reducer } from "./userSlice"
 
-const store: EnhancedStore<{
-  user: unknown;
-}, UnknownAction, Tuple<[StoreEnhancer<{
-  dispatch: ThunkDispatch<{
-      user: unknown;
-  }, undefined, UnknownAction>;
-}>, StoreEnhancer]>>= configureStore({
+const store = configureStore({
   reducer: {
     user: reducer
   },
