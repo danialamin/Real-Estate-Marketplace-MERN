@@ -7,7 +7,7 @@ import { useSelector } from "react-redux"
 import { useNavigate, useNavigation } from "react-router-dom"
 
 const CreateListing = () => {
-  const [files, setFiles] = useState<[]>([])
+  const [files, setFiles] = useState([])
   const [formData, setFormData] = useState({
     imageUrls: [],
     name: "",
