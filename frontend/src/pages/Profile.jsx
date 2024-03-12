@@ -5,7 +5,7 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/
 import {app} from "../firebase"
 import {action} from "../redux/userSlice"
 
-const Profile: React.FC = () => {  
+const Profile = () => {  
   const currentUser = useSelector(state => state.user.currentUser)
   const fileRef = useRef(null)
   const [file, setFile] = useState(undefined)

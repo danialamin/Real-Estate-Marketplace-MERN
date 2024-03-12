@@ -18,7 +18,7 @@ const signinAction = async (obj) => {
   return data.message
 }
 
-const SignIn: React.FC = () => {
+const SignIn = () => {
   const navigation = useNavigation()
   const navigationStateIsIdle = navigation.state == 'idle' ? true : false
   const actionData = useActionData()
