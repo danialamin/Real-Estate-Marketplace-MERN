@@ -32,7 +32,7 @@ const UpdateListing = () => {
   useEffect(() => {
     const fetchListing = async () => {
       const listingId = params.listingId
-      const res = await fetch(`http://localhost:4000/getListing/${listingId}`)
+      const res = await fetch(`${window.location.origin}/getListing/${listingId}`)
       const data = await res.json()
       setFormData(data.message)
     }
@@ -97,7 +97,7 @@ const UpdateListing = () => {
     e.preventDefault()
     if (formData.imageUrls.length == 0) {return setError('Please upload image(s)')}
     else {setError(false)}
-    const res = await fetch(`http://localhost:4000/listing/updateMyListing/${currentUser._id}`, {
+    const res = await fetch(`${window.location.origin}/listing/updateMyListing/${currentUser._id}`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       credentials: 'include',

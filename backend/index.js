@@ -8,6 +8,7 @@ const verifyUser = require('./utils/verifyUser')
 const dotenv = require('dotenv').config()
 const cookieParser = require("cookie-parser");
 const listingModel = require('./models/listingModel')
+const path = require('path')
 
 const app = express()
 
@@ -15,17 +16,17 @@ app.use(cookieParser())
 app.use(cors({origin: true, credentials: true}))
 app.use(express.json()) //to parse req.body
 
+app.get('/', (req,res) => {
+  app.use(express.static(path.resolve(__dirname, "frontend", "build")))
+  res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"))
+})
+
 mongoose.connect(process.env.CONNECTION_STRING)
 .then(() => {
   console.log("Connected to mongodb")
   app.listen(4000, () => console.log('listening to port 4000')) // listen to requests only after we're connected to the db
 }).catch(err => {
   console.log(err)
-})
-
-app.use('/', (req, res, next) => {
-  res.send('running')
-  next()
 })
 
 app.post("/api/user/signup", async (req, res) => {
