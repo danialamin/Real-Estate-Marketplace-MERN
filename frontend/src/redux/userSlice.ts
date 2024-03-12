@@ -1,6 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { Draft, PayloadAction, Slice, SliceSelectors, createSlice } from "@reduxjs/toolkit";
 
-const userSlice = createSlice({
+const userSlice: Slice<{
+  currentUser: null;
+}, {
+  setCurrentUser: (state: Draft<{
+      currentUser: null;
+  }>, action: {
+      payload: PayloadAction;
+      type: string;
+  }) => void;
+}, "user", "user", SliceSelectors<{
+  currentUser: null;
+}>> = createSlice({
   name: "user",
   initialState: {
     currentUser: null
