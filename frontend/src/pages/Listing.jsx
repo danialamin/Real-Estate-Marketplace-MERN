@@ -12,7 +12,7 @@ import { Suspense } from "react"
 
 export const Loader = async ({request, params}) => {
   const pathParam = params
-  const res = await fetch(`${window.location.origin}/getListing/${pathParam.id}`)
+  const res = await fetch(`http://localhost:4000/listing/getListing/${pathParam.id}`)
   const data = res.json()
   return defer({res: data})
 }

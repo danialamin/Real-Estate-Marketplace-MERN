@@ -7,7 +7,7 @@ const Action = async ({request, params}) => {
   const email = formData.get("email")
   const password = formData.get("password")
 
-  fetch(`${window.location.origin}/api/user/signup`, {
+  fetch(`http://localhost:4000/api/auth/signup`, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({username, email, password})

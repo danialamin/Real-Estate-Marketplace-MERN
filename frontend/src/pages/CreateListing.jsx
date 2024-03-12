@@ -86,7 +86,7 @@ const CreateListing = () => {
     e.preventDefault()
     if (formData.imageUrls.length == 0) {return setError('Please upload image(s)')}
     else {setError(false)}
-    const res = await fetch(`${window.location.origin}/listing/createListing/${currentUser._id}`, {
+    const res = await fetch(`http://localhost:4000/listing/createListing/${currentUser._id}`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       credentials: 'include',
