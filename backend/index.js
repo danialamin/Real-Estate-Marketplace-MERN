@@ -23,6 +23,11 @@ mongoose.connect(process.env.CONNECTION_STRING)
   console.log(err)
 })
 
+app.use('/', (req, res, next) => {
+  res.send('running')
+  next()
+})
+
 app.post("/api/user/signup", async (req, res) => {
   const { username, email, password} = req.body
   const hashed = await bcryptjs.hash(password, 10)
