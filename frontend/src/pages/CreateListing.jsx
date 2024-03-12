@@ -3,8 +3,8 @@ import CheckboxesAndLabels from "../components/CheckboxesAndLabels"
 import InputsAndLabels from "../components/InputsAndLabels"
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage"
 import { app } from "../firebase"
-import { UseSelector, useSelector } from "react-redux"
-import { NavigateFunction, Navigation, useNavigate, useNavigation } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { useNavigate, useNavigation } from "react-router-dom"
 
 const CreateListing = () => {
   const [files, setFiles] = useState<[]>([])
