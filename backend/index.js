@@ -8,18 +8,12 @@ const verifyUser = require('./utils/verifyUser')
 const dotenv = require('dotenv').config()
 const cookieParser = require("cookie-parser");
 const listingModel = require('./models/listingModel')
-const path = require('path')
 
 const app = express()
 
 app.use(cookieParser())
 app.use(cors({origin: true, credentials: true}))
 app.use(express.json()) //to parse req.body
-
-app.get('/', (req,res) => {
-  app.use(express.static(path.resolve(__dirname, "frontend", "build")))
-  res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"))
-})
 
 mongoose.connect(process.env.CONNECTION_STRING)
 .then(() => {
