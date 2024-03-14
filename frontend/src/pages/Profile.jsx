@@ -132,8 +132,8 @@ const Profile = () => {
           <p onClick={handleSignOut} className="text-red-600 text-[0.9rem] font-[600] cursor-pointer">Sign out</p>
         </div>
         <p onClick={handleShowListings} className="mt-[20px] text-green-600 text-[0.9rem] font-[600] cursor-pointer flex justify-center">Show listings</p>
-          {myListings.length > 0 && myListings.map((listing, url) => 
-            <div key={url} className="border rounded-lg p-3 flex justify-between items-center gap-4">
+          {(myListings.length > 0) && myListings.map((listing) => 
+            <div key={listing._id} className="border rounded-lg p-3 flex justify-between items-center gap-4">
               <Link to={`/listing/${listing._id}`}>
                 <img src={listing.imageUrls[0]} alt="image" className="w-16 h-16 object-contain cursor-pointer"/>
               </Link>
