@@ -10,7 +10,7 @@ const Home = () => {
           <p className='tracking-tighter'>We have a wide range of properties for you to choose from.</p> 
         </div>
         <div className='w-[350px]'>
-          <img src="../../assets/EasyEstates.png" alt="" />
+          <img src="https://easyestates.net/images/logo.png" alt="" />
         </div>
       </div>
     </div>
