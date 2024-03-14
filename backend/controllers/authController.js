@@ -24,7 +24,7 @@ const signin = async (req, res) => {
     if (!validPassword) return res.status(400).json({message: "User not found!"})
     const token = jwt.sign({id: validUser._id}, process.env.SECRET)
     res
-      .cookie('jwt', token)
+      .cookie('jwt', token, {secure: true, httpOnly: true, sameSite: 'none'})
       .status(200)
       .json({message: validUser})
   } catch(err) {
@@ -66,7 +66,7 @@ const signOutController = async (req, res) => {
   if (req.user.id !== req.params.id) {return res.status(404).json({'message': 'user not logged in'})}
 
   res.status(200)
-     .cookie('jwt', '')
+     .cookie('jwt', '', {secure: true, httpOnly: true, sameSite: 'none'})
      .json({'message': 'sign out successful'})
 }
 
