@@ -15,7 +15,7 @@ const app = express()
 module.exports = app
 
 app.use(cookieParser())
-app.use(cors({origin: true, credentials:true, sameSite: 'none'}))
+app.use(cors({origin: true, credentials:true}))
 app.use(express.json()) //to parse req.body
 
 mongoose.connect(process.env.CONNECTION_STRING)
@@ -29,3 +29,8 @@ mongoose.connect(process.env.CONNECTION_STRING)
 app.use("/api/auth", authRoute)
 app.use("/listing", listingRoute)
 app.use("/get", getRoute)
+
+app.get('/getListing/:id', async (req, res) => {
+  const listing = await listingModel.findOne({_id: req.params.id})
+  res.status(200).json({'message': listing})
+})
