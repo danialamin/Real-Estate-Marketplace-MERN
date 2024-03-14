@@ -5,7 +5,7 @@ const {createListingController, getListingController, deleteListingController, u
 const Router = express.Router()
 
 Router.post('/createListing/:id', verifyUser, createListingController)
-Router.get('/myListing/:id', verifyUser, getListingController)
+Router.get('/myListing/:id', getListingController)
 Router.post('/deleteMyListing/:id', verifyUser, deleteListingController)
 Router.post('/updateMyListing/:id', verifyUser, updateMyListingController)
 Router.get('/getListing/:id', getOneListingController)
