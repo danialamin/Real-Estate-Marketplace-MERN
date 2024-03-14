@@ -82,7 +82,7 @@ const Profile = () => {
     const data = await res.json()
 
     if (data.message === 'user not logged in') {
-      setError(true)
+      setError('true')
     } else {
       dispatch(action(null))
     }
