@@ -16,7 +16,7 @@ const createListingController = async(req, res) => {
 }
 
 const getListingController = async (req, res) => {
-  if (req.user.id !== req.params.id) {return res.status(404).json({'message': 'user not logged in'})}
+  // if (req.user.id !== req.params.id) {return res.status(404).json({'message': 'user not logged in'})}
 
   const listings = await listingModel.find({userRef: req.params.id})
   res.status(200).json({'message': listings})
