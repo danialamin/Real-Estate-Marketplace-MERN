@@ -24,7 +24,7 @@ const signin = async (req, res) => {
     if (!validPassword) return res.status(400).json({message: "User not found!"})
     const token = jwt.sign({id: validUser._id}, process.env.SECRET)
     res
-      .cookie('jwt', token, {secure: true, httpOnly: true, sameSite: 'none'})
+      .cookie('jwt', token)
       .status(200)
       .json({message: validUser})
   } catch(err) {
