@@ -3,7 +3,11 @@ import { Await, Link, defer, useLoaderData } from "react-router-dom"
 export const searchLoader = async ({request, params}) => {
   const url = new URL(request.url)
   const searchParams = url.searchParams
+<<<<<<< HEAD
   const res = await fetch(`https://real-estate-marketplace-mern-server-nu.vercel.app/get/get?searchTerm=${searchParams.get("searchTerm")}`)
+=======
+  const res = await fetch(`http://localhost:3000/get/get?searchTerm=${searchParams.get("searchTerm")}`)
+>>>>>>> 469549e77e972b774e0b2f235084181dabd0effe
   const data = res.json()
 
   return defer({data: data})
