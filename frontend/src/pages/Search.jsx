@@ -4,7 +4,7 @@ export const searchLoader = async ({request, params}) => {
   const url = new URL(request.url)
   const searchParams = url.searchParams
   const res = await fetch(`https://real-estate-marketplace-mern-server-nu.vercel.app/get/get?searchTerm=${searchParams.get("searchTerm")}`, {
-    accessControlAllowOrigin: true
+    "Access-Control-Allow-Origin": true
   })
   const data = res.json()
 
