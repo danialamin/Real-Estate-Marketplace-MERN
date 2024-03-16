@@ -15,7 +15,7 @@ const app = express()
 module.exports = app
 
 app.use(cookieParser())
-app.use(cors({origin:true, credentials:true}))
+app.use(cors({origin:"https://real-estate-marketplace-mern-server-nu.vercel.app", credentials:true}))
 app.use(express.json()) //to parse req.body
 
 mongoose.connect(process.env.CONNECTION_STRING)
