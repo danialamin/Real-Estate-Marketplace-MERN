@@ -17,6 +17,7 @@ module.exports = app
 app.use(cookieParser())
 app.use(cors({origin: true, credentials:true}))
 app.use(express.json()) //to parse req.body
+app.use(express.urlencoded({extended: true}))
 
 mongoose.connect(process.env.CONNECTION_STRING)
 .then(() => {
