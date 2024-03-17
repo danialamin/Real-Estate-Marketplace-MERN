@@ -1,5 +1,5 @@
 const express = require('express')
-const {createUserController, signin, updateUserController, deleteUserController, signOutController} = require('../controllers/authController')
+const {createUserController, signin, updateUserController, deleteUserController, signOutController} = require('../../controllers/authController')
 const verifyUser = require('../api/utils/verifyUser')
 
 const Router = express.Router()

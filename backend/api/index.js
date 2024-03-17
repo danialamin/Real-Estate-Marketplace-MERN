@@ -1,15 +1,15 @@
 const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
-const authRoute = require('../routes/authRoute')
+const authRoute = require('./routes/authRoute')
 const bcryptjs = require('bcryptjs')
 const userModel = require('./models/userModel')
 const verifyUser = require('./utils/verifyUser')
 const dotenv = require('dotenv').config()
 const cookieParser = require("cookie-parser");
 const listingModel = require('./models/listingModel')
-const listingRoute = require('../routes/listingRoutes')
-const getRoute = require('../routes/getRoute')
+const listingRoute = require('./routes/listingRoutes')
+const getRoute = require('./routes/getRoute')
 
 const app = express()
 

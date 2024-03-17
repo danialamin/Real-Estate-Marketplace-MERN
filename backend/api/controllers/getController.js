@@ -1,4 +1,4 @@
-const listingModel = require('../api/models/listingModel.js')
+const listingModel = require('../models/listingModel.js')
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv').config()
 
