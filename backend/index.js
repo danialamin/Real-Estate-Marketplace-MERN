@@ -12,10 +12,9 @@ const listingRoute = require('./routes/listingRoutes')
 const getRoute = require('./routes/getRoute')
 
 const app = express()
-module.exports = app
 
-app.use(cookieParser())
 app.use(cors({origin: true, credentials:true}))
+app.use(cookieParser())
 app.use(express.json()) //to parse req.body
 app.use(express.urlencoded({extended: true}))
 
@@ -35,3 +34,5 @@ app.get('/getListing/:id', async (req, res) => {
   const listing = await listingModel.findOne({_id: req.params.id})
   res.status(200).json({'message': listing})
 })
+
+module.exports = app
