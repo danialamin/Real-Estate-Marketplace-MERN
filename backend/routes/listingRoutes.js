@@ -1,6 +1,6 @@
 const express = require('express')
-const verifyUser = require('../api/utils/verifyUser')
-const {createListingController, getListingController, deleteListingController, updateMyListingController, getOneListingController} = require('../../controllers/listingControllers')
+const verifyUser = require('../utils/verifyUser')
+const {createListingController, getListingController, deleteListingController, updateMyListingController, getOneListingController} = require('../controllers/listingControllers')
 
 const Router = express.Router()
 
