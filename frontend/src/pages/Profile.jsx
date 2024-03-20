@@ -43,7 +43,7 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const res = await fetch(`http://localhost:4000/api/auth/updateUser/${currentUser._id}`, {
+      const res = await fetch(`https://real-estate-marketplace-mern-server.vercel.app/api/auth/updateUser/${currentUser._id}`, {
         method: 'POST',
         credentials: 'include',
         headers: {'Content-Type': 'application/json'},
@@ -61,7 +61,7 @@ const Profile = () => {
     }
   }
   const handleDelete = async () => {
-    const res = await fetch(`http://localhost:4000/api/auth/deleteUser/${currentUser._id}`, {
+    const res = await fetch(`https://real-estate-marketplace-mern-server.vercel.app/api/auth/deleteUser/${currentUser._id}`, {
       method: 'DELETE',
       credentials: 'include'
     })
@@ -75,7 +75,7 @@ const Profile = () => {
     }
   }
   const handleSignOut = async () => {
-    const res = await fetch(`http://localhost:4000/api/auth/signOut/${currentUser._id}`, {
+    const res = await fetch(`https://real-estate-marketplace-mern-server.vercel.app/api/auth/signOut/${currentUser._id}`, {
       method: 'GET',
       credentials: 'include'
     })
@@ -88,7 +88,7 @@ const Profile = () => {
     }
   }
   const handleShowListings = async () => {
-    const res = await fetch(`http://localhost:4000/listing/myListing/${currentUser._id}`, {
+    const res = await fetch(`https://real-estate-marketplace-mern-server.vercel.app/listing/myListing/${currentUser._id}`, {
       method: 'GET',
       credentials: 'include'
     })
@@ -96,7 +96,7 @@ const Profile = () => {
     setMyListings(data.message)
   }
   const handleDeleteListing = async (listingId) => {
-    const res = await fetch(`http://localhost:4000/listing/deleteMyListing/${currentUser._id}`, {
+    const res = await fetch(`https://real-estate-marketplace-mern-server.vercel.app/listing/deleteMyListing/${currentUser._id}`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       credentials: "include",

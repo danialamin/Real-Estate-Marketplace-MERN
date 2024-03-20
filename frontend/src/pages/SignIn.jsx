@@ -7,7 +7,7 @@ const signinAction = async (obj) => {
   const email = formData.get("email")
   const password = formData.get("password")
 
-  const resp = await fetch(`http://localhost:4000/api/auth/signin`, {
+  const resp = await fetch(`https://real-estate-marketplace-mern-server.vercel.app/api/auth/signin`, {
     method: 'POST',
     credentials: 'include',
     headers: {'Content-Type': 'application/json'},
