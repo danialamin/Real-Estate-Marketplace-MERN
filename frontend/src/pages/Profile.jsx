@@ -43,7 +43,7 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const res = await fetch(`http://localhost:4000/api/auth/updateUser/${currentUser._id}`, {
+      const res = await fetch(`https://real-estate-inky-two.vercel.app/api/auth/updateUser/${currentUser._id}`, {
         method: 'POST',
         credentials: 'include',
         headers: {'Content-Type': 'application/json'},

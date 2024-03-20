@@ -32,7 +32,7 @@ const UpdateListing = () => {
   useEffect(() => {
     const fetchListing = async () => {
       const listingId = params.listingId
-      const res = await fetch(`http://localhost:4000/getListing/${listingId}`)
+      const res = await fetch(`https://real-estate-inky-two.vercel.app/getListing/${listingId}`)
       const data = await res.json()
       setFormData(data.message)
     }
