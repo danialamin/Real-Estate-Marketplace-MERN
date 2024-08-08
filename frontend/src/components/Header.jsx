@@ -28,9 +28,8 @@ const Header = () => {
   }, [location.search])
 
   const showAll = () => {
-    setInputVal('')
     const urlParams = new URLSearchParams(window.location.search)
-    urlParams.set('searchTerm', inputVal)
+    urlParams.set('searchTerm', '')
     const searchQuery = urlParams.toString()
     navigate(`/search?${searchQuery}`)
   }
