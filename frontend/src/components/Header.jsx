@@ -27,6 +27,14 @@ const Header = () => {
     }
   }, [location.search])
 
+  const showAll = () => {
+    setInputVal('')
+    const urlParams = new URLSearchParams(window.location.search)
+    urlParams.set('searchTerm', inputVal)
+    const searchQuery = urlParams.toString()
+    navigate(`/search?${searchQuery}`)
+  }
+
   return (
     <header className="bg-slate-300 h-[70px] flex justify-around items-center max-sm:justify-between shadow-md">
         <h1 className="font-bold text-[1.1rem] sm:text-[2rem]  hover:cursor-pointer">
@@ -36,7 +44,8 @@ const Header = () => {
 
       <form onSubmit={e => handleSubmit(e)} className="w-[max(200px,30%)] h-[45px] flex justify-center items-center rounded bg-white max-sm:h-[30px] max-sm:text-[0.9rem]">
         <input type="text" value={inputVal} onChange={(e)=>setInputVal(e.target.value)} className="w-[90%] h-full outline-none px-2 rounded " placeholder="Search...." />
-        <button className="px-[2px] h-full bg-white rounded"><FaSearch /></button>
+        <p className="flex justify-center items-center px-[4px] h-full rounded whitespace-nowrap bg-blue-500 text-white border-[1px] border-[white] cursor-pointer" onClick={showAll}>Show all</p>
+        <button className="px-[10px] bg-blue-500 h-full rounded text-white font-[700] font-[sans] border-[1px] border-[white]"><FaSearch /></button>
       </form>
 
       <div className="sm:hidden cursor-pointer" onClick={() => setShowSide(prev => !prev)}><IoMdMenu size={25} /></div>
